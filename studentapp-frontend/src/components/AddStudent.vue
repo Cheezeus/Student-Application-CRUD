@@ -19,7 +19,7 @@
                     <div class="row">
                         <div class="mb-3 px-5">
                             <label for="nim" class="form-label">NIM:</label>
-                            <input type="text" v-model="student.nim" class="form-control" required />
+                            <input type="text" v-model="student.nim" class="form-control" placeholder="Masukkan NIM" required />
                         </div>
                     </div>
     
@@ -27,12 +27,12 @@
                         <div class="col-6">
                             <div class="mb-3 px-5">
                                 <label for="namaDepan" class="form-label">Nama Depan:</label>
-                                <input type="text" v-model="student.namaDepan" class="form-control" required />
+                                <input type="text" v-model="student.namaDepan" class="form-control" placeholder="Masukkan Nama Depan" required />
                             </div>
                 
                             <div class="mb-3 px-5">
                                 <label for="namaBelakang" class="form-label">Nama Belakang:</label>
-                                <input type="text" v-model="student.namaBelakang" class="form-control"/>
+                                <input type="text" v-model="student.namaBelakang" class="form-control" placeholder="Masukkan Nama Belakang"/>
                             </div>
                         </div>
         

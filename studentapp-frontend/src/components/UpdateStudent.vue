@@ -55,43 +55,66 @@
     </div>
   </template>
   
-  <script>
-    import axios from 'axios'
+<script>
+import axios from 'axios';
 
-  export default {
-    data() {
-      return {
-        student: {
-          nim: '',
-          namaDepan: '',
-          namaBelakang: '',
-          tanggalLahir: '',
-          jenisKelamin: '',
-        },
-      };
-    },
-    methods: {
-      async updateStudent() {
-        // Add your API request to update student details here
-        try {
-            const nim = this.$route.params.id;
-            if (!nim) {
-                console.error('NIM parameter is missing.');
-            return;
-            }
-
-            await axios.put(`http://localhost:8080/api/studentapp/student/${nim}`, this.student);
-  
-          // Assuming a successful update, you can redirect to the student list or show a success message
-          this.$router.push({ name: 'student-list' });
-        } catch (error) {
-          // Handle errors (show error message, log, etc.)
-          console.error('Error updating student:', error.response.data);
-        }
+export default {
+  data() {
+    return {
+      student: {
+        nim: '',
+        namaDepan: '',
+        namaBelakang: '',
+        tanggalLahir: '',
+        jenisKelamin: '',
       },
+    };
+  },
+  methods: {
+    async updateStudent() {
+      try {
+        const nim = this.$route.params.id;
+        if (!nim) {
+          console.error('NIM parameter is missing.');
+          return;
+        }
+
+        await axios.put(`http://localhost:8080/api/studentapp/student/${nim}`, this.student);
+
+        // Assuming a successful update, you can redirect to the student list or show a success message
+        this.$router.push({ name: 'student-list' });
+      } catch (error) {
+        // Handle errors (show error message, log, etc.)
+        console.error('Error updating student:', error.response.data);
+      }
     },
-  };
-  </script>
+    async fetchStudentDetails() {
+      try {
+        const nim = this.$route.params.id;
+        if (!nim) {
+          console.error('NIM parameter is missing.');
+          return;
+        }
+
+        const response = await axios.get(`http://localhost:8080/api/studentapp/student/${nim}`);
+        this.student = response.data;
+      } catch (error) {
+        console.error('Error fetching student details:', error);
+      }
+    },
+  },
+  created() {
+    const nim = this.$route.params.id;
+
+    if (nim) {
+      this.fetchStudentDetails(nim);
+    } else {
+      console.error('NIM parameter is missing.');
+    }
+  },
+};
+</script>
+
   
   <style scoped>
     span {
