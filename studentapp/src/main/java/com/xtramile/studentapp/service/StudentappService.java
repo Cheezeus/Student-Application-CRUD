@@ -46,17 +46,20 @@ public class StudentappService {
 
     // Update Student
     public ResponseEntity<Student> updateStudent(Long nim, Student updatedStudent) { 
-        if (nim == null) { 
-            throw new IllegalArgumentException("NIM cannot be null"); 
-        } 
-        Student existingStudent 
-        = studentRepository.findById(nim).orElseThrow( 
-            () -> new EntityNotFoundException(String.valueOf(nim))); 
-        existingStudent.setNamaDepan(updatedStudent.getNamaDepan()); 
-        existingStudent.setNamaBelakang(updatedStudent.getNamaBelakang());
-        existingStudent.setTanggalLahir(updatedStudent.getTanggalLahir());
-        existingStudent.setJenisKelamin(updatedStudent.getJenisKelamin());
-        Student savedEntity = studentRepository.save(existingStudent); 
+        Student savedEntity = new Student();
+        try {
+            Student existingStudent 
+            = studentRepository.findById(nim).orElseThrow( 
+                () -> new EntityNotFoundException(String.valueOf(nim))); 
+            existingStudent.setNamaDepan(updatedStudent.getNamaDepan()); 
+            existingStudent.setNamaBelakang(updatedStudent.getNamaBelakang());
+            existingStudent.setTanggalLahir(updatedStudent.getTanggalLahir());
+            existingStudent.setJenisKelamin(updatedStudent.getJenisKelamin());
+            savedEntity = studentRepository.save(existingStudent); 
+            
+        } catch (IllegalArgumentException e) {
+            e.getMessage();
+        }
         return ResponseEntity.ok(savedEntity); 
     }
     
